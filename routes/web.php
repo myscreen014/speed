@@ -11,6 +11,28 @@
 |
 */
 
+class A {
+
+}
+$a = new A();
+
+/* FRONT */
 Route::get('/', function () {
     return view('welcome');
 });
+
+/* ADMIN */
+Auth::routes();
+Route::group(
+	[
+		'prefix' => 'admin',
+		'middleware'=> ['auth']
+	], 
+	function () {
+		Route::get('/', function() {
+			return redirect()->action('Admin\IndexController@index');
+		});
+		Route::get('/index', 'Admin\IndexController@index');
+	}
+);
+
